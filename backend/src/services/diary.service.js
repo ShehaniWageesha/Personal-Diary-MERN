@@ -1,27 +1,26 @@
 const httpStatus = require("http-status");
 const mongoose = require("mongoose");
-const TodoModel = require("../models/diary.model");
+const DiaryModel = require("../models/diary.model");
 const APIError = require("../helpers/api-error");
 const logger = require("../helpers/logger");
 
-const createTodos = async ({ username, description, duration, date }) => {
+const createDiaries = async ({ review, description, date }) => {
   let session = null;
   try {
     session = await mongoose.startSession();
     session.startTransaction();
 
-    const todo = new TodoModel({
-      username,
+    const diary = new DiaryModel({
+      review,
       description,
-      duration,
       date,
     });
 
-    const createTodos = await todo.save({ session });
+    const createDiaries = await diary.save({ session });
 
-    if (!createTodos) {
+    if (!createDiaries) {
       throw new APIError({
-        message: "Error occured while creating a todo",
+        message: "Error occured while creating a diary",
         status: httpStatus.INTERNAL_SERVER_ERROR,
         isPublic: false,
       });
@@ -30,11 +29,11 @@ const createTodos = async ({ username, description, duration, date }) => {
     await session.commitTransaction();
 
     return {
-      message: "Todo creation done successfully",
-      data: todo.id,
+      message: "Diary creation done successfully",
+      data: diary.id,
     };
   } catch (error) {
-    logger.error("Error occured while creating a todo", error);
+    logger.error("Error occured while creating a diary", error);
     if (session) {
       await session.abortTransaction();
     }
@@ -46,65 +45,65 @@ const createTodos = async ({ username, description, duration, date }) => {
   }
 };
 
-const getTodos = async function (data) {
+const getDiaries = async function (data) {
   try {
-    const allTodos = await TodoModel.find(data);
+    const allDiaries = await DiaryModel.find(data);
     return {
-      message: "Listing all todos",
-      data: allTodos,
+      message: "Listing all diaries",
+      data: allDiaries,
     };
   } catch (e) {
     // Log Errors
-    throw Error("Error while getting todos");
+    throw Error("Error while getting diaries");
   }
 };
 
-const getTodoById = async (id) => {
+const getDiaryById = async (id) => {
   try {
-    const foundTodo = await TodoModel.findById(id);
-    console.log("Todos : ", foundTodo);
+    const foundDiary = await DiaryModel.findById(id);
+    console.log("Diaries : ", foundDiary);
     return {
-      message: "Listing a single todo",
-      data: foundTodo,
+      message: "Listing a single diary",
+      data: foundDiary,
     };
   } catch (error) {
-    logger.error("Error occured while reading the todo", error);
+    logger.error("Error occured while reading the diary", error);
     throw new APIError(error);
   }
 };
 
-const updateTodo = async ({ id, username, description, duration, date }) => {
+const updateDiary = async ({ id, review, description, date }) => {
   try {
-    const todo = await TodoModel.findById(id);
+    const diary = await DiaryModel.findById(id);
 
-    todo.overwrite({ username, description, duration, date });
-    await todo.save();
+    diary.overwrite({ username, description, date });
+    await diary.save();
 
     return {
-      message: "Todo updated successfully",
-      data: todo,
+      message: "Diary updated successfully",
+      data: diary,
     };
   } catch (error) {
-    logger.error("Error occured while updating the todo", error);
+    logger.error("Error occured while updating the diary", error);
   }
 };
 
-const deleteTodo = async (id) => {
+const deleteDiary = async (id) => {
   try {
-    const todo = await TodoModel.deleteOne({ _id: id });
-    console.log(todo);
+    const diary = await DiaryModel.deleteOne({ _id: id });
+    console.log(diary);
     return {
-      message: "Todo deleted successfully",
+      message: "Diary deleted successfully",
     };
   } catch (error) {
-    logger.error("Error occured while deleting the todo", error);
+    logger.error("Error occured while deleting the diary", error);
   }
 };
 
 module.exports = {
-  createTodos,
-  getTodos,
-  getTodoById,
-  updateTodo,
-  deleteTodo,
+  createDiaries,
+  getDiaries,
+  getDiaryById,
+  updateDiary,
+  deleteDiary,
 };

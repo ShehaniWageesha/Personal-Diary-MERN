@@ -1,16 +1,16 @@
 const express = require("express");
 
-const TodoController = require("../../controllers/diary.controller.js");
+const DiaryController = require("../../controllers/diary.controller.js");
 
-//route - /api/v1/todo
+//route - /api/v1/diary
 const router = express.Router();
 
 router.get("/health", (req, res) => res.status(200).send("UP"));
 
-router.get("/", TodoController.findAll);
-router.get("/:id", TodoController.findOne);
-router.post("/", TodoController.create);
-router.patch("/:id", TodoController.update);
-router.delete("/:id", TodoController.todoDelete);
+router.get("/", DiaryController.findAll);
+router.get("/:id", DiaryController.findOne);
+router.post("/", DiaryController.create);
+router.patch("/:id", DiaryController.update);
+router.delete("/:id", DiaryController.diaryDelete);
 
 module.exports = router;

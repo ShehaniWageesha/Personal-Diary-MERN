@@ -2,11 +2,10 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const todoSchema = new Schema(
+const diarySchema = new Schema(
   {
-    username: { type: String, require: true },
+    review: { type: String, require: true },
     description: { type: String, require: true },
-    duration: { type: Number, require: true },
     date: { type: Date, require: true },
   },
   {
@@ -14,5 +13,5 @@ const todoSchema = new Schema(
   }
 );
 
-const Todo = mongoose.model("Todo", todoSchema);
-module.exports = Todo;
+const Diary = mongoose.model("Diary", diarySchema);
+module.exports = Diary;
