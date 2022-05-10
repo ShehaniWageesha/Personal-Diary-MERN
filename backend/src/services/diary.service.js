@@ -76,7 +76,7 @@ const updateDiary = async ({ id, review, description, date }) => {
   try {
     const diary = await DiaryModel.findById(id);
 
-    diary.overwrite({ username, description, date });
+    diary.overwrite({ review, description, date });
     await diary.save();
 
     return {

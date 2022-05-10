@@ -1,5 +1,6 @@
-export const USER = '/User';
-export const DELETE_USER = '/User';
 export const CREATE_USER = 'User/add';
-export const GET_USER = '/User';
-export const UPDATE_USER = '/User/update';
+export const DIARY = '/Diary';
+export const DELETE_DIARY = '/Diary';
+export const CREATE_DIARY = 'Diary/add';
+export const GET_DIARY = '/Diary';
+export const UPDATE_DIARY = '/Diary/update';

@@ -20,21 +20,9 @@ const create = async (req, res) => {
       confirm
     });
     return res.status(httpStatus.OK).json({ result });
+    
   } catch (error) {
     return res.status(httpStatus[400]).json({ error });
-  }
-};
-
-// Find all users
-const findAll = async function (req, res) {
-  try {
-    var users = await UserService.getUsers();
-    return res.status(200).json({
-      status: 200,
-      data: users,
-    });
-  } catch (e) {
-    return res.status(400).json({ status: 400, message: e.message });
   }
 };
 

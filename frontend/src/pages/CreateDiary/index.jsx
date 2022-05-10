@@ -1,18 +1,19 @@
 /** @format */
 import React, { useState } from "react";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-function RegisterUser() {
+function CreateDiary() {
   const [data, setData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirm: "",
+    review: "",
+    description: "",
+    date: new Date(),
   });
-  
-  function handleChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
+
+  function handleChange(evt) {
+    const name = evt.target.name;
+    const value = evt.target.value;
     setData({
       ...data,
       [name]: value,
@@ -26,7 +27,7 @@ function RegisterUser() {
       const res = await axios({
         method: "post",
         baseURL: "http://localhost:3333",
-        url: "/api/v1/user/",
+        url: "/api/v1/diary/",
         data: data,
         headers: {
           "Content-Type": "application/json",
@@ -34,7 +35,7 @@ function RegisterUser() {
       });
 
       console.log(res.data);
-      alert("User Registered Successfully!");
+      alert("Data Saved Successfully!");
       window.location.assign("http://localhost:3000/list");
     } catch (error) {
       console.log(error);
@@ -43,58 +44,51 @@ function RegisterUser() {
 
   return (
     <div>
-      <h3>Register Your Account</h3>
+      <h3>Create</h3>
       <br></br>
       <form noValidate onSubmit={(e) => onSubmitForm(e)}>
         <div className="form-group">
-          <label>Username :</label>
+          <label>Review :</label>
           <input
             type="text"
-            name="username"
+            name="review"
             required
             className="form-control"
-            value={data.username}
+            value={data.review}
             onChange={handleChange}
           />
         </div>
         <div className="form-group">
-          <label>Email Address :</label>
+          <label>Description :</label>
           <input
             type="text"
-            name="email"
+            name="description"
             required
             className="form-control"
-            value={data.email}
+            value={data.description}
             onChange={handleChange}
           />
         </div>
         <div className="form-group">
-          <label>Password :</label>
-          <input
-            type="password"
-            name="password"
-            required
-            className="form-control"
-            value={data.password}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Confirm Password :</label>
-          <input
-            type="password"
-            name="confirm"
-            required
-            className="form-control"
-            value={data.confirm}
-            onChange={handleChange}
-          />
+          <label>Date :</label>
+          <div>
+            <DatePicker
+              name="date"
+              selected={data.date}
+              onChange={(newDate) =>
+                setData({
+                  ...data,
+                  date: newDate,
+                })
+              }
+            />
+          </div>
         </div>
         <br></br>
         <div className="form-group">
           <input
             type="submit"
-            value="Register"
+            value="Create"
             className="btn btn-primary"
           />
         </div>
@@ -103,4 +97,4 @@ function RegisterUser() {
   );
 }
 
-export default RegisterUser;
+export default CreateDiary;

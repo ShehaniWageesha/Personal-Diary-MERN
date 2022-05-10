@@ -4,22 +4,24 @@ import { Link } from "react-router-dom";
 function Dashboard() {
   return (
     <div className="DashMain" style={{ 
-      backgroundImage: `url("../50-Beautiful-and-Minimalist-Presentation-Backgrounds-036.jpg")` 
+      backgroundImage: `url("/frontend/src/app/background.jpg")` 
     }}>
       <div className="backgroundH">
         <div className="transpBox">
-          <p><strong>#PersonalDiaryApp</strong></p>
+          <h1><strong>#PersonalDiaryApp</strong></h1>
         </div>
       </div>
+      <br></br>
+      <br></br>
       <div>
         <div>
           <Link to="/login" className="nav-link">
-            <h6>Sign In</h6>
+            <h3>Sign In</h3>
           </Link>
         </div>
         <div>
-          <Link to="/create" className="nav-link">
-            <h6>Sign Up</h6>
+          <Link to="/register" className="nav-link">
+            <h3>Sign Up</h3>
           </Link>
         </div>
       </div>
